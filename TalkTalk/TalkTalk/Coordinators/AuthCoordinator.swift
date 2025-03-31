@@ -17,9 +17,12 @@ class AuthCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     weak var delegate: AuthCoordinatorDelegate?
+    private let viewControllerFactory: ViewControllerFactory
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController,
+         viewControllerFactory: ViewControllerFactory) {
         self.navigationController = navigationController
+        self.viewControllerFactory = viewControllerFactory
     }
     
     func start() {

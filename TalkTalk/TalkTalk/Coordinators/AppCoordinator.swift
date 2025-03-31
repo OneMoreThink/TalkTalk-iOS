@@ -13,10 +13,13 @@ class AppCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     private let window: UIWindow
+    private let viewControllerFactory: ViewControllerFactory
     
-    init(window: UIWindow) {
+    init(window: UIWindow,
+         viewControllerFactory: ViewControllerFactory) {
         self.window = window
         self.navigationController = UINavigationController()
+        self.viewControllerFactory = viewControllerFactory
     }
     
     func start() {
@@ -37,14 +40,14 @@ class AppCoordinator: Coordinator {
     }
     
     private func showAuthFlow() {
-        let authCoordinator = AuthCoordinator(navigationController: navigationController)
+        let authCoordinator = AuthCoordinator(navigationController: navigationController, viewControllerFactory: viewControllerFactory)
         authCoordinator.delegate = self
         childCoordinators.append(authCoordinator)
         authCoordinator.start()
     }
     
     private func showMainFlow() {
-        let mainCoordinator = MainCoordinator(navigationController: navigationController)
+        let mainCoordinator = MainCoordinator(navigationController: navigationController, viewControllerFactory: viewControllerFactory)
         childCoordinators.append(mainCoordinator)
         mainCoordinator.start()
     }

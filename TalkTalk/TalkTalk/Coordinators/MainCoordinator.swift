@@ -11,9 +11,11 @@ import UIKit
 class MainCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
+    private let viewControllerFactory: ViewControllerFactory
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, viewControllerFactory: ViewControllerFactory) {
         self.navigationController = navigationController
+        self.viewControllerFactory = viewControllerFactory
     }
     
     func start() {
@@ -21,13 +23,13 @@ class MainCoordinator: Coordinator {
         
         // 채팅 탭
         let chatNavController = UINavigationController()
-        let chatCoordinator = ChatCoordinator(navigationController: chatNavController)
+        let chatCoordinator = ChatCoordinator(navigationController: chatNavController, viewControllerFactory: viewControllerFactory)
         childCoordinators.append(chatCoordinator)
         chatCoordinator.start()
         
         // 프로필 탭
         let profileNavController = UINavigationController()
-        let profileCoordinator = ProfileCoordinator(navigationController: profileNavController)
+        let profileCoordinator = ProfileCoordinator(navigationController: profileNavController, viewControllerFactory: viewControllerFactory)
         childCoordinators.append(profileCoordinator)
         profileCoordinator.start()
         

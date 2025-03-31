@@ -11,9 +11,11 @@ import UIKit
 class ChatCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
+    private let viewControllerFactory: ViewControllerFactory
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, viewControllerFactory: ViewControllerFactory) {
         self.navigationController = navigationController
+        self.viewControllerFactory = viewControllerFactory
     }
     
     func start() {
