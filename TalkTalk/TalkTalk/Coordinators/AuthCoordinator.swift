@@ -26,14 +26,14 @@ class AuthCoordinator: Coordinator {
     }
     
     func start() {
-        let loginVC = LoginViewController()
+        let loginVC = viewControllerFactory.makeLoginViewController()
         loginVC.coordinator = self
         // 애니메이션과 함께 stack 교체
         navigationController.setViewControllers([loginVC], animated: true)
     }
     
     func goToRegister() {
-        let registerVC = RegisterViewController()
+        let registerVC = viewControllerFactory.makeRegisterViewController()
         registerVC.coordinator = self
         navigationController.pushViewController(registerVC, animated: true)
     }

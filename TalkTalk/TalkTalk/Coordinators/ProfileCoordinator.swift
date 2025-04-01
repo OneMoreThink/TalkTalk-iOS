@@ -19,19 +19,19 @@ class ProfileCoordinator: Coordinator {
     }
     
     func start() {
-        let profileVC = ProfileViewController()
+        let profileVC = viewControllerFactory.makeProfileViewController()
         profileVC.coordinator = self
         navigationController.setViewControllers([profileVC], animated: false)
     }
     
     func showEditProfile() {
-        let editProfileVC = EditProfileViewController()
+        let editProfileVC = viewControllerFactory.makeEditProfileViewController()
         editProfileVC.coordinator = self
         navigationController.pushViewController(editProfileVC, animated: true)
     }
     
     func showSettings() {
-        let settingsVC = SettingsViewController()
+        let settingsVC = viewControllerFactory.makeSettingsViewController()
         settingsVC.coordinator = self
         navigationController.pushViewController(settingsVC, animated: true)
     }

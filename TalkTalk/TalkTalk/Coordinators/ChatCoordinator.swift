@@ -19,19 +19,19 @@ class ChatCoordinator: Coordinator {
     }
     
     func start() {
-        let chatListVC = ChatListViewController()
+        let chatListVC = viewControllerFactory.makeChatListViewController()
         chatListVC.coordinator = self
         navigationController.setViewControllers([chatListVC], animated: false)
     }
     
     func showChatDetail(chatId: String) {
-        let chatDetailVC = ChatDetailViewController(chatId: chatId)
+        let chatDetailVC = viewControllerFactory.makeChatDetailViewController(chatId: chatId)
         chatDetailVC.coordinator = self
         navigationController.pushViewController(chatDetailVC, animated: true)
     }
     
     func showNewChat() {
-        let newChatVC = NewChatViewController()
+        let newChatVC = viewControllerFactory.makeNewChatViewController()
         newChatVC.coordinator = self
         navigationController.pushViewController(newChatVC, animated: true)
     }

@@ -23,55 +23,29 @@ class DependencyRegistrar {
     
     private func registerServices() {
         // NetworkService
-        container.register(NetworkService.self) {
-            DefaultNetworkService()
-        }
+        container.register(NetworkService.self, instance: DefaultNetworkService())
         
         // WebSocketService
-        container.register(WebSocketService.self) {
-            DefaultWebSocketService(networkService: self.container.resolve(NetworkService.self)!)
-        }
+        container.register(WebSocketService.self,
+                        instance:
+                            DefaultWebSocketService(networkService: container.resolve(NetworkService.self)!))
     }
     
     private func registerStores() {
         // Stores (액터)
-        container.register(UserStore.self) {
-            UserStore()
-        }
-        
-        container.register(ChatStore.self) {
-            ChatStore()
-        }
-        
-        container.register(MessageStore.self) {
-            MessageStore()
-        }
+        container.register(UserStore.self, instance: UserStore())
+        container.register(ChatStore.self, instance: ChatStore())
+        container.register(MessageStore.self, instance: MessageStore())
     }
     
     private func registerRepositories() {
         // Repositories
-        container.register(UserRepository.self) {
-            DefaultUserRepository(
-                networkService: self.container.resolve(NetworkService.self)!,
-                userStore: self.container.resolve(UserStore.self)!
-            )
-        }
-        
-        container.register(ChatRepository.self) {
-            DefaultChatRepository(
-                networkService: self.container.resolve(NetworkService.self)!,
-                chatStore: self.container.resolve(ChatStore.self)!
-            )
-        }
-        
-        container.register(MessageRepository.self) {
-            DefaultMessageRepository(
-                networkService: self.container.resolve(NetworkService.self)!,
-                webSocketService: self.container.resolve(WebSocketService.self)!,
-                messageStore: self.container.resolve(MessageStore.self)!,
-                userStore: self.container.resolve(UserStore.self)!
-            )
-        }
+        container.register(UserRepository.self,
+                          instance: DefaultUserRepository(networkService: container.resolve(NetworkService.self)!, userStore: container.resolve(UserStore.self)!))
+        container.register(ChatRepository.self,
+                           instance: DefaultChatRepository(networkService: container.resolve(NetworkService.self)!, chatStore: container.resolve(ChatStore.self)!))
+        container.register(MessageRepository.self,
+                           instance: DefaultMessageRepository(networkService: container.resolve(NetworkService.self)!, webSocketService: container.resolve(WebSocketService.self)!, messageStore: container.resolve(MessageStore.self)!, userStore: container.resolve(UserStore.self)!))
     }
     
     private func registerViewModels() {
@@ -107,8 +81,6 @@ class DependencyRegistrar {
     
     private func registerFactories() {
         // ViewControllerFactory
-        container.register(ViewControllerFactory.self) {
-            DefaultViewControllerFactory(container: self.container)
-        }
+        container.register(ViewControllerFactory.self, instance: DefaultViewControllerFactory(container: self.container))
     }
 }
